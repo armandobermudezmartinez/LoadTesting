@@ -16,6 +16,7 @@ export default function () {
   });
   const tokenHeaders = {
     "Content-Type": "application/json",
+    accept: "application/json",
   };
 
   let tokenResponse = http.post(tokenUrl, tokenPayload, {

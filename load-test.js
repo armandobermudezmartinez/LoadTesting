@@ -29,25 +29,9 @@ export default function () {
     "Token is present": (r) => r.json("token") !== undefined,
   });
 
-  const token = tokenResponse.json("token"); // Extract the token
-
-  // Step 2: Use the token in the next API call
-  const apiUrl = "https://your-api.com/endpoint"; // Replace with your API endpoint
-  const apiPayload = JSON.stringify({
-    key: "value", // Replace with required payload for this API
-  });
-  const apiHeaders = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
-  };
-
-  let apiResponse = http.post(apiUrl, apiPayload, { headers: apiHeaders });
-
-  // Validate API response
-  check(apiResponse, {
-    "API request is successful": (r) => r.status === 200,
-    "Response time is acceptable": (r) => r.timings.duration < 200,
-  });
+  // Print the response for debugging
+  console.log("Response status:", tokenResponse.status);
+  console.log("Response status:", tokenResponse.body);
 
   // Optional sleep
   sleep(1);

@@ -4,14 +4,14 @@ import { check, sleep } from "k6";
 export let options = {
   vus: 1, // Number of virtual users
   //   duration: "30s", // Duration of the test
-  iterations: 1, // Run the test for one iteration only
+  iterations: 1, // Run the test for iteration(s)
 };
 
 export default function () {
   // Step 1: Fetch the token
-  const tokenUrl = "https://public-data-staging.desy.de/api/v3/auth/login"; // Replace with the token endpoint
+  const tokenUrl = "https://public-data-staging.desy.de/api/v3/auth/login"; // token endpoint
   const tokenPayload = JSON.stringify({
-    username: "ingestor", // Replace with required credentials
+    username: "ingestor", // credentials
     password: "fCwe5gF8x^nGZBX",
   });
   const tokenHeaders = {
@@ -32,9 +32,21 @@ export default function () {
   const token = tokenResponse.json("token"); // Extract the token
 
   // Step 2: Use the token in the next API call
-  const apiUrl = "https://your-api.com/endpoint"; // Replace with your API endpoint
+  const apiUrl = "https://public-data-staging.desy.de/api/v3/origdatablocks"; // API endpoint
+
   const apiPayload = JSON.stringify({
-    key: "value", // Replace with required payload for this API
+    ownerGroup: "ingestor",
+    owner: "ingestor",
+    ownerEmail: "scicatingestor@your.site",
+    contactEmail: "scicatingestor@your.site",
+    sourceFolder: "/nfs",
+    creationTime: "2024-10-14T14:37:50.857Z",
+    type: "derived",
+    description: "this is test4",
+    datasetName: "test3",
+    investigator: "scicatingestor@your.site",
+    inputDatasets: "",
+    usedSoftware: "",
   });
   const apiHeaders = {
     "Content-Type": "application/json",
@@ -50,8 +62,11 @@ export default function () {
   });
 
   // Print the response for debugging
-  console.log("Response status:", tokenResponse.status);
-  console.log("Response status:", tokenResponse.body);
+  console.log("Token response status:", tokenResponse.status);
+  console.log("Token response status:", tokenResponse.body);
+
+  console.log("API Response status:", apiResponse.status);
+  console.log("API Response status:", apiResponse.body);
 
   // Optional sleep
   sleep(1);

@@ -2,16 +2,17 @@ import http from "k6/http";
 import { check, sleep } from "k6";
 
 export let options = {
-  vus: 2, // Number of virtual users
-  duration: "30s", // Duration of the test
+  vus: 1, // Number of virtual users
+  //   duration: "30s", // Duration of the test
+  iterations: 1, // Run the test for one iteration only
 };
 
 export default function () {
   // Step 1: Fetch the token
-  const tokenUrl = "https://your-auth-api.com/token"; // Replace with the token endpoint
+  const tokenUrl = "https://public-data-staging.desy.de/api/v3/auth/login"; // Replace with the token endpoint
   const tokenPayload = JSON.stringify({
-    username: "your-username", // Replace with required credentials
-    password: "your-password",
+    username: "ingestor", // Replace with required credentials
+    password: "fCwe5gF8x^nGZBX",
   });
   const tokenHeaders = {
     "Content-Type": "application/json",

@@ -29,7 +29,7 @@ export default function () {
     "Token is present": (r) => r.json("token") !== undefined,
   });
 
-  const token = tokenResponse.json("token"); // Extract the token
+  const token = tokenResponse.json("access_token"); // Extract the token
 
   // Step 2: Use the token in the next API call
   const apiUrl = "https://public-data-staging.desy.de/api/v3/origdatablocks"; // API endpoint

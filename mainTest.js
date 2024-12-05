@@ -26,7 +26,7 @@ export default function () {
   for (let i = 0; i < payloads.length; i++) {
     const payload = payloads[i]; // Get each payload from the list
     // console.log(`Creating dataset for payload ${i + 1}`);
-    // console.log("Creating dataset for payload", payload);
+    // console.log("payload", payload);
     datasetService.createDataset(payload); // Create dataset for each payload
     sleep(1); // Optional: simulate time between requests
   }

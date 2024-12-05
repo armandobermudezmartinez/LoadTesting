@@ -8,8 +8,8 @@ services:
       - "8086:8086" # InfluxDB HTTP API port
     environment:
       INFLUXDB_DB: k6 # The database name for k6 data
-      INFLUXDB_ADMIN_USER: admin # InfluxDB admin username
-      INFLUXDB_ADMIN_PASSWORD: admin # InfluxDB admin password
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin 
 
   grafana:
     image: grafana/grafana:latest
@@ -17,6 +17,6 @@ services:
     ports:
       - "3000:3000" # Grafana web interface
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: admin # Grafana admin password
+      GF_SECURITY_ADMIN_PASSWORD: admin 
     depends_on:
       - influxdb

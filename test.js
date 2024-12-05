@@ -4,7 +4,7 @@ import { check, sleep } from "k6";
 export let options = {
   vus: 1, // Number of virtual users
   // duration: "30s", // Duration of the test
-  iterations: 1, // Run the test for iteration(s)
+  iterations: 10, // Run the test for iteration(s)
 };
 
 export default function () {
@@ -32,24 +32,24 @@ export default function () {
   const token = tokenResponse.json("access_token"); // Extract the token
 
   // Step 2: Use the token in the next API call
-  const apiUrl = "https://public-data-staging.desy.de/api/v3/datasets"; // API endpoint
+  const apiUrl = "https://public-data-staging.desy.de/api/v3/origdatablocks"; // API endpoint
 
   const apiPayload = JSON.stringify({
     ownerGroup: "ingestor",
-    owner: "ingestor",
-    ownerEmail: "scicat@ingestor.site",
-    contactEmail: "scicat@ingestor.site",
-    sourceFolder: "/nfs",
-    sourceFolderHost: "sourcefolder.host",
-    creationTime: "2024-10-17T15:41:24.347Z",
-    type: "raw",
-    description: "k6 test for Loadtesting",
-    datasetName: "first k6 loadtest",
-    principalInvestigator: "Armando Bermudez Martinez",
-    creationLocation: "Hamburg",
-    investigator: "armando@bermudez.martinez",
-    inputDatasets: "",
-    usedSoftware: "",
+    size: 0,
+    chkAlg: "string",
+    dataFileList: [
+      {
+        path: "string",
+        size: 0,
+        time: "2024-10-17T11:16:52.470Z",
+        chk: "string",
+        uid: "string",
+        gid: "string",
+        perm: "string",
+      },
+    ],
+    datasetId: "public-data/7d886695-d07a-408b-8436-885d8960ac18",
   });
   const apiHeaders = {
     "Content-Type": "application/json",

@@ -3,19 +3,21 @@ import http from "k6/http";
 import { check } from "k6";
 
 export class DatasetService {
-  constructor(baseURL, token) {
-    this.baseURL = baseURL;
-    this.token = token;
+  constructor(authService) {
+    this.authService = authService; // AuthService is injected into DatasetService
   }
 
   createDataset(payload) {
-    const url = `${this.baseURL}/datasets`;
+    // Use authService to get the token whenever needed
+    const token = this.authService.login(); // Get the token directly from AuthService
+    const apiUrl = `${this.authService.baseURL}/datasets`;
+    console.log(apiUrl);
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
     };
 
-    const response = http.post(url, JSON.stringify(payload), { headers });
+    const response = http.post(apiUrl, JSON.stringify(payload), { headers });
     check(response, {
       "Dataset created successfully": (r) => r.status === 200,
       "Response time is acceptable": (r) => r.timings.duration < 500,

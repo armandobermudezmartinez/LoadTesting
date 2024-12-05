@@ -17,19 +17,13 @@ export default function () {
     "ingestor",
     "fCwe5gF8x^nGZBX"
   );
-  const token = authService.login();
 
   // Step 2: Initialize Dataset Service
-  const datasetService = new DatasetService(
-    "https://public-data-staging.desy.de/api/v3",
-    token
-  );
+  const datasetService = new DatasetService(authService);
 
   // Step 3: Instantiate PayloadManager
   const payloadManager = new PayloadManager();
-
   const payloads = payloadManager.getPayloads(5, true, true);
-  console.log(`Generated payload: ${JSON.stringify(payloads)}`); // Optional: Debug
 
   // Step 4: Loop through payloads and create datasets
   for (let i = 0; i < payloads.length; i++) {

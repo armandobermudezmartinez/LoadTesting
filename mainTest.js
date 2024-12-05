@@ -5,7 +5,7 @@ import { sleep } from "k6";
 import { PayloadManager } from "./payloadManager.js";
 import { getTestOptions } from "./testOptions.js";
 
-export let options = getTestOptions("s");
+export let options = getTestOptions("spike");
 
 export default function () {
   // Step 1: Authenticate
@@ -20,7 +20,7 @@ export default function () {
 
   // Step 3: Instantiate PayloadManager
   const payloadManager = new PayloadManager();
-  const payloads = payloadManager.getPayloads(1, true, false);
+  const payloads = payloadManager.getPayloads(10, true, true);
 
   // Step 4: Loop through payloads and create datasets
   for (let i = 0; i < payloads.length; i++) {

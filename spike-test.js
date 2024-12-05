@@ -3,9 +3,9 @@ import { check, sleep } from "k6";
 
 export let options = {
   stages: [
-    { duration: "2m", target: 50 }, // Ramp-up to 50 VUs in 2 minutes
-    { duration: "5m", target: 50 }, // Hold steady for 5 minutes
-    { duration: "2m", target: 0 }, // Ramp-down to 0 VUs
+    { duration: "1m", target: 10 }, // Ramp-up to 10 VUs in 1 minute
+    { duration: "30s", target: 100 }, // Sudden spike to 100 VUs
+    { duration: "1m", target: 10 }, // Return to normal load
   ],
 };
 

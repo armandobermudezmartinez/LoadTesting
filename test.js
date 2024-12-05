@@ -65,4 +65,14 @@ export default function () {
     "API request is successful": (r) => r.status === 200,
     "Response time is acceptable": (r) => r.timings.duration < 200,
   });
+
+  // Print the response for debugging
+  //   console.log("Token response status:", tokenResponse.status);
+  //   console.log("Token response status:", tokenResponse.body);
+
+  //   console.log("API Response status:", apiResponse.status);
+  //   console.log("API Response status:", apiResponse.body);
+
+  // Optional sleep
+  //   sleep(1);
 }

@@ -2,11 +2,9 @@ import http from "k6/http";
 import { check, sleep } from "k6";
 
 export let options = {
-  stages: [
-    { duration: "2m", target: 50 }, // Ramp-up to 50 VUs in 2 minutes
-    { duration: "5m", target: 50 }, // Hold steady for 5 minutes
-    { duration: "2m", target: 0 }, // Ramp-down to 0 VUs
-  ],
+  vus: 20, // Number of virtual users
+  duration: "600s", // Duration of the test
+  //   iterations: 1, // Run the test for iteration(s)
 };
 
 export default function () {

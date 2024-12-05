@@ -46,18 +46,23 @@ export class PayloadManager {
   }
 
   // Method to fetch a payload (either random or from file)
-  getPayload(useRandom = false) {
+  getPayload(useRandom = true) {
     if (useRandom || !this.payloads) {
       return this.generateRandomPayload();
     }
     return this.getRandomFromFile();
   }
 
-  // Method to fetch multiple payloads (with an optional limit)
-  getPayloads(count = 1, useRandom = false) {
+  // Method to fetch multiple payloads with an optional random count (up to maxCount)
+  getPayloads(maxCount = 1, useRandom = true, useRandomCount = false) {
+    // Determine count: if useRandomCount is true, generate a random number up to maxCount
+    const count = useRandomCount
+      ? Math.floor(Math.random() * maxCount) + 1
+      : maxCount;
+
     let result = [];
     for (let i = 0; i < count; i++) {
-      result.push(this.getPayload(useRandom));
+      result.push(this.getPayload(useRandom)); // useRandom affects only the content
     }
     return result;
   }

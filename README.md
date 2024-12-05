@@ -1,4 +1,4 @@
-# Load Testing API andpoints
+# Load Testing API endpoints
 
 An API Load Testing for Scicat
 

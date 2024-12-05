@@ -18,6 +18,7 @@ export class DatasetService {
     };
 
     const response = http.post(apiUrl, JSON.stringify(payload), { headers });
+    console.log("response: ", response);
     check(response, {
       "Dataset created successfully": (r) => r.status === 200,
       "Response time is acceptable": (r) => r.timings.duration < 500,

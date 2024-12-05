@@ -3,12 +3,9 @@ import { AuthService } from "./authService.js";
 import { DatasetService } from "./datasetService.js";
 import { sleep } from "k6";
 import { PayloadManager } from "./payloadManager.js";
+import { getTestOptions } from "./testOptions.js";
 
-// Options for the test
-export let options = {
-  vus: 1, // Number of Virtual Users
-  iterations: 1, // Total number of iterations per VU
-};
+export let options = getTestOptions("s");
 
 export default function () {
   // Step 1: Authenticate
@@ -23,14 +20,15 @@ export default function () {
 
   // Step 3: Instantiate PayloadManager
   const payloadManager = new PayloadManager();
-  const payloads = payloadManager.getPayloads(5, true, true);
+  const payloads = payloadManager.getPayloads(1, true, false);
 
   // Step 4: Loop through payloads and create datasets
   for (let i = 0; i < payloads.length; i++) {
     const payload = payloads[i]; // Get each payload from the list
     console.log(`Creating dataset for payload ${i + 1}`);
+    console.log("Creating dataset for payload", payload);
     datasetService.createDataset(payload); // Create dataset for each payload
-    sleep(2); // Optional: simulate time between requests
+    sleep(1); // Optional: simulate time between requests
   }
 
   // Optional sleep to simulate realistic behavior

@@ -23,7 +23,7 @@ export class PayloadManager {
   // Method to generate a random payload dynamically
   generateRandomPayload() {
     const randomNum = Math.floor(Math.random() * 1000); // Generate a reusable random number
-    const types = ["raw", "processed", "derived"];
+    const types = ["raw"];
     const locations = ["Hamburg", "Berlin", "Munich"];
 
     return {

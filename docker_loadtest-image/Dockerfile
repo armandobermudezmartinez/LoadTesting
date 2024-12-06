@@ -7,5 +7,5 @@ WORKDIR /app
 # Copy your project files into the container
 COPY --chmod=0755 . .
 
-# Set the default command to execute the shell script
-CMD ["/app/run-test.sh"]
+# Override the entrypoint to use sh
+ENTRYPOINT ["sh", "/app/run-test.sh"]

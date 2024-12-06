@@ -9,7 +9,7 @@ services:
     environment:
       INFLUXDB_DB: k6 # The database name for k6 data
       INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: admin 
+      INFLUXDB_ADMIN_PASSWORD: admin
 
   grafana:
     image: grafana/grafana:latest
@@ -17,6 +17,10 @@ services:
     ports:
       - "3000:3000" # Grafana web interface
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: admin 
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./dashboards:/var/lib/grafana/dashboards
     depends_on:
       - influxdb

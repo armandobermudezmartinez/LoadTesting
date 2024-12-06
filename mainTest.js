@@ -5,14 +5,22 @@ import { sleep } from "k6";
 import { PayloadManager } from "./payloadManager.js";
 import { getTestOptions } from "./testOptions.js";
 
-export let options = getTestOptions("spike");
+// Access the TEST_TYPE environment variable
+const testType = __ENV.TEST_TYPE || "default";
+
+// Setup function: runs once before the test begins
+export function setup() {
+  console.log("Test Type:", testType);
+}
+
+export let options = getTestOptions(testType);
 
 export default function () {
   // Step 1: Authenticate
   const authService = new AuthService(
     "https://public-data-staging.desy.de/api/v3",
     "ingestor",
-    "dummy-pass"
+    "fCwe5gF8x^nGZBX"
   );
 
   // Step 2: Initialize Dataset Service
@@ -20,17 +28,21 @@ export default function () {
 
   // Step 3: Instantiate PayloadManager
   const payloadManager = new PayloadManager();
-  const payloads = payloadManager.getPayloads(10, true, true);
+
+  const maxCount = __ENV.MAX_COUNT || 1;
+  const useRandomCount = __ENV.USE_RANDOM_COUNT || false;
+  const useRandomPayload = __ENV.USE_RANDOM_PAYLOAD || true;
+  const payloads = payloadManager.getPayloads(
+    maxCount,
+    useRandomCount,
+    useRandomPayload
+  );
 
   // Step 4: Loop through payloads and create datasets
+  const timeBetweenRequests = 1;
   for (let i = 0; i < payloads.length; i++) {
     const payload = payloads[i]; // Get each payload from the list
-    // console.log(`Creating dataset for payload ${i + 1}`);
-    // console.log("payload", payload);
     datasetService.createDataset(payload); // Create dataset for each payload
-    sleep(1); // Optional: simulate time between requests
+    sleep(timeBetweenRequests); // Optional: simulate time between requests
   }
-
-  // Optional sleep to simulate realistic behavior
-  //   sleep(1);
 }

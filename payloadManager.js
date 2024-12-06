@@ -54,7 +54,7 @@ export class PayloadManager {
   }
 
   // Method to fetch multiple payloads with an optional random count (up to maxCount)
-  getPayloads(maxCount = 1, useRandom = true, useRandomCount = false) {
+  getPayloads(maxCount = 1, useRandomCount = false, useRandomPayload = true) {
     // Determine count: if useRandomCount is true, generate a random number up to maxCount
     const count = useRandomCount
       ? Math.floor(Math.random() * maxCount) + 1
@@ -62,7 +62,7 @@ export class PayloadManager {
 
     let result = [];
     for (let i = 0; i < count; i++) {
-      result.push(this.getPayload(useRandom)); // useRandom affects only the content
+      result.push(this.getPayload(useRandomPayload)); // useRandom affects only the content
     }
     return result;
   }

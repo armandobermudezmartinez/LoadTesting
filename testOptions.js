@@ -1,26 +1,35 @@
 export const testOptionsConfig = {
   load: {
-    vus: 20, // Number of virtual users
-    duration: "30s", // Duration of the test
+    vus: __ENV.VUS_LOAD || 20, // Default to 20 VUs if not set
+    duration: __ENV.DURATION_LOAD || "30s", // Default to 30s if not set
   },
   soak: {
-    vus: 20, // Steady number of users
-    duration: "12h", // Duration of the test
+    vus: __ENV.VUS_SOAK || 20,
+    duration: __ENV.DURATION_SOAK || "12h",
   },
   spike: {
     stages: [
-      { duration: "1m", target: 10 }, // Ramp-up to 10 VUs in 1 minute
-      { duration: "30s", target: 100 }, // Sudden spike to 100 VUs
-      { duration: "1m", target: 10 }, // Return to normal load
+      {
+        duration: __ENV.RAMP_UP_DURATION || "1m",
+        target: __ENV.RAMP_UP_VUS || 10,
+      },
+      {
+        duration: __ENV.SPIKE_DURATION || "30s",
+        target: __ENV.SPIKE_VUS || 100,
+      },
+      {
+        duration: __ENV.RAMP_DOWN_DURATION || "1m",
+        target: __ENV.RAMP_DOWN_VUS || 10,
+      },
     ],
   },
   stress: {
-    vus: 20, // Number of virtual users
-    duration: "600s", // Duration of the test
+    vus: __ENV.VUS_STRESS || 20,
+    duration: __ENV.DURATION_STRESS || "600s",
   },
   default: {
-    vus: 1, // Default to a single virtual user
-    iterations: 1, // One iteration
+    vus: __ENV.VUS_DEFAULT || 1,
+    iterations: __ENV.ITERATIONS_DEFAULT || 1,
   },
 };
 

@@ -5,10 +5,7 @@ FROM grafana/k6:0.55.0
 WORKDIR /app
 
 # Copy your project files into the container
-COPY . .
-
-# Ensure the shell script has executable permissions
-RUN chmod +x /app/run-test.sh
+COPY --chmod=0755 . .
 
 # Set the default command to execute the shell script
 CMD ["/app/run-test.sh"]

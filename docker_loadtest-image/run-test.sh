@@ -6,4 +6,4 @@ source .env
 set +a
 
 # Run the k6 test
-k6 run --out influxdb=http://localhost:8086/k6 mainTest.js
+k6 run --out influxdb=http://influxdb:8086/k6 mainTest.js

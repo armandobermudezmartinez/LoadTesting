@@ -26,3 +26,16 @@ services:
       - ./dashboards:/var/lib/grafana/dashboards
     depends_on:
       - influxdb
+
+  k6:
+    image: bermudea/loadtesting:1.0 # Your custom k6 image
+    container_name: k6
+    working_dir: /app
+    command: /app/run-test.sh # Run the shell script
+    environment:
+      INFLUXDB_HOST: influxdb # InfluxDB container name
+    volumes:
+      - ./.env:/app/.env # Map the local .env file to the container
+    depends_on:
+      - influxdb
+      - grafana

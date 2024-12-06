@@ -12,7 +12,7 @@ export default function () {
   const authService = new AuthService(
     "https://public-data-staging.desy.de/api/v3",
     "ingestor",
-    "fCwe5gF8x^nGZBX"
+    "dummy-pass"
   );
 
   // Step 2: Initialize Dataset Service

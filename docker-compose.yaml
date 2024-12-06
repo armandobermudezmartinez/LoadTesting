@@ -35,7 +35,7 @@ services:
     environment:
       INFLUXDB_HOST: influxdb # InfluxDB container name
     volumes:
-      - ./.env:/app/.env # Map the local .env file to the container
+      - ./config:/app/config # Map the local .env file to the container
     depends_on:
       - influxdb
       - grafana

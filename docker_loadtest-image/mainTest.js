@@ -18,9 +18,9 @@ export let options = getTestOptions(testType);
 export default function () {
   // Step 1: Authenticate
   const authService = new AuthService(
-    "https://public-data-staging.desy.de/api/v3",
-    "ingestor",
-    "fCwe5gF8x^nGZBX"
+    __ENV.TARGET_URL,
+    __ENV.USER,
+    __ENV.PASSWORD
   );
 
   // Step 2: Initialize Dataset Service

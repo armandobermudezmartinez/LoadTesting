@@ -1,0 +1,46 @@
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086" # InfluxDB HTTP API port
+    environment:
+      INFLUXDB_DB: k6 # The database name for k6 data
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000" # Grafana web interface
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_NAME: "My Org."
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/dashboard.json
+    volumes:
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb
+
+  k6:
+    image: gitlab.desy.de:5555/ric/opendata/load-testing-k6-image/loading-test-k6
+    pull_policy: always
+    container_name: k6
+    working_dir: /app
+    command: /app/run-test.sh # Run the shell script
+    environment:
+      INFLUXDB_HOST: influxdb # InfluxDB container name
+      DOCKER_USERNAME: ${DOCKER_USERNAME}
+      DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+    env_file:
+      - ./.env
+    volumes:
+      - ./config:/app/config # Map the local .env file to the container
+    depends_on:
+      - influxdb
+      - grafana
